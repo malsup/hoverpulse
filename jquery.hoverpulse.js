@@ -3,12 +3,23 @@
  * Examples and docs at: http://malsup.com/jquery/hoverpulse/
  * Dual licensed under the MIT and GPL
  * Requires: jQuery v1.2.6 or later
- * @version: 1.0  03-JAN-2009
+ * @version: 1.01  26-FEB-2009
  */
 
 (function($) {
 
 $.fn.hoverpulse = function(options) {
+    // in 1.3+ we can fix mistakes with the ready state
+    if (this.length == 0) {
+        if (!$.isReady && this.selector) {
+            var s = this.selector, c = this.context;
+            $(function() {
+                $(s,c).hoverpulse(options);
+            });
+        }
+        return this;
+    }    
+    
 	var opts = $.extend({}, $.fn.hoverpulse.defaults, options);
 
 	// parent must be relatively positioned
