@@ -42,10 +42,10 @@ $.fn.hoverpulse = function(options) {
 
 			var size = $this.data('hoverpulse.size');
 			var w = size.w, h = size.h;
-			$this.stop().animate({ 
-				top:  ('-'+opts.size+'px'),
+			$this.stop().animate({
+				top:  opts.size_y ? ('-'+opts.size_y+'px') : ('-'+opts.size+'px'),
 				left: ('-'+opts.size+'px'),
-				height: (h+2*opts.size)+'px',
+				height: opts.size_y ? (h+2*opts.size_y)+'px' : (h+2*opts.size)+'px',
 				width:  (w+2*opts.size)+'px'
 			}, opts.speed);
 		},
@@ -69,6 +69,7 @@ $.fn.hoverpulse = function(options) {
 
 $.fn.hoverpulse.defaults = {
 	size:  20,
+	size_y: 0,
 	speed: 200,
 	zIndexActive: 100,
 	zIndexNormal: 1
