@@ -9,17 +9,17 @@
 (function($) {
 
 $.fn.hoverpulse = function(options) {
-    // in 1.3+ we can fix mistakes with the ready state
-    if (this.length == 0) {
-        if (!$.isReady && this.selector) {
-            var s = this.selector, c = this.context;
-            $(function() {
-                $(s,c).hoverpulse(options);
-            });
-        }
-        return this;
-    }    
-    
+	// in 1.3+ we can fix mistakes with the ready state
+	if (this.length == 0) {
+		if (!$.isReady && this.selector) {
+			var s = this.selector, c = this.context;
+			$(function() {
+				$(s,c).hoverpulse(options);
+			});
+		}
+		return this;
+	}
+
 	var opts = $.extend({}, $.fn.hoverpulse.defaults, options);
 
 	// parent must be relatively positioned
@@ -39,14 +39,14 @@ $.fn.hoverpulse = function(options) {
 		function() {
 			var $this = $(this);
 			$this.parent().css('z-index', opts.zIndexActive);
-			
+
 			var size = $this.data('hoverpulse.size');
 			var w = size.w, h = size.h;
 			$this.stop().animate({ 
-				top:  ('-'+opts.size+'px'), 
-				left: ('-'+opts.size+'px'), 
-				height: (h+2*opts.size)+'px', 
-				width:	(w+2*opts.size)+'px' 
+				top:  ('-'+opts.size+'px'),
+				left: ('-'+opts.size+'px'),
+				height: (h+2*opts.size)+'px',
+				width:  (w+2*opts.size)+'px'
 			}, opts.speed);
 		},
 		// hover out
@@ -54,12 +54,12 @@ $.fn.hoverpulse = function(options) {
 			var $this = $(this);
 			var size = $this.data('hoverpulse.size');
 			var w = size.w, h = size.h;
-			
-			$this.stop().animate({ 
-				top:  0, 
-				left: 0, 
-				height: (h+'px'), 
-				width:	(w+'px') 
+
+			$this.stop().animate({
+				top:  0,
+				left: 0,
+				height: (h+'px'),
+				width:  (w+'px')
 			}, opts.speed, function() {
 				$this.parent().css('z-index', opts.zIndexNormal);
 			});
