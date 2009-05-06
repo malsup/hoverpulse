@@ -22,6 +22,8 @@ $.fn.hoverpulse = function(options) {
 
 	var opts = $.extend({}, $.fn.hoverpulse.defaults, options);
 
+	// if not modified size_y is same as size
+	opts.size_y = opts.size_y || opts.size;
 	// parent must be relatively positioned
 	this.parent().css({ position: 'relative' });
 	// pulsing element must be absolutely positioned
@@ -43,9 +45,9 @@ $.fn.hoverpulse = function(options) {
 			var size = $this.data('hoverpulse.size');
 			var w = size.w, h = size.h;
 			$this.stop().animate({
-				top:  opts.size_y ? ('-'+opts.size_y+'px') : ('-'+opts.size+'px'),
+				top:  ('-'+opts.size_y+'px'),
 				left: ('-'+opts.size+'px'),
-				height: opts.size_y ? (h+2*opts.size_y)+'px' : (h+2*opts.size)+'px',
+				height: (h+2*opts.size_y)+'px',
 				width:  (w+2*opts.size)+'px'
 			}, opts.speed);
 		},
