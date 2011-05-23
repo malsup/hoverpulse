@@ -3,7 +3,7 @@
  * Examples and docs at: http://malsup.com/jquery/hoverpulse/
  * Dual licensed under the MIT and GPL
  * Requires: jQuery v1.2.6 or later
- * @version: 1.02  18-JAN-2010
+ * @version: 1.03  23-MAY-2011
  */
 
 (function($) {
