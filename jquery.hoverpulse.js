@@ -49,7 +49,7 @@ $.fn.hoverpulse = function(options) {
 				left: ('-'+opts.size+'px'),
 				height: (h+2*opts.size_y)+'px',
 				width:  (w+2*opts.size)+'px'
-			}, opts.speed);
+			}, opts.speed, opts.over);
 		},
 		// hover out
 		function() {
@@ -64,6 +64,7 @@ $.fn.hoverpulse = function(options) {
 				width:  (w+'px')
 			}, opts.speed, function() {
 				$this.parent().css('z-index', opts.zIndexNormal);
+				opts.out.call(this);
 			});
 		}
 	);
@@ -74,7 +75,9 @@ $.fn.hoverpulse.defaults = {
 	size_y: 0,
 	speed: 200,
 	zIndexActive: 100,
-	zIndexNormal: 1
+	zIndexNormal: 1,
+	over: $.noop || function() {},
+	out: $.noop || function() {}
 };
 
 })(jQuery);
