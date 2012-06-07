@@ -22,10 +22,12 @@ $.fn.hoverpulse = function(options) {
 
 	var opts = $.extend({}, $.fn.hoverpulse.defaults, options);
 
+	var parent = this.parent();
+
 	// if not modified size_y is same as size
 	opts.size_y = opts.size_y || opts.size;
 	// parent must be relatively positioned
-	this.parent().css({ position: 'relative' });
+	parent.css({ position: 'relative' });
 	// pulsing element must be absolutely positioned
 	this.css({ position: 'absolute', top: 0, left: 0 });
 
@@ -34,6 +36,10 @@ $.fn.hoverpulse = function(options) {
 		var w = $this.width(), h = $this.height();
 		$this.data('hoverpulse.size', { w: parseInt(w), h: parseInt(h) });
 	});
+
+	if(parent.is('td')){
+		this.wrap("<div style='position: relative; height: "+parent.innerHeight()+"px;'></div>");
+	}
 
 	// bind hover event for behavior
 	return this.hover(
