@@ -21,20 +21,27 @@ $.fn.hoverpulse = function(options) {
 	}
 
 	var opts = $.extend({}, $.fn.hoverpulse.defaults, options);
+	var magnifying = opts.magnify > 1;
 
+	/* if using the original size options rather than the magnify option, setup size_y */
+	if(!magnifying){
+		// if not modified size_y is same as size
+		opts.size_y = opts.size_y || opts.size;
+	}
+	
 	var parent = this.parent();
 
-	// if not modified size_y is same as size
-	opts.size_y = opts.size_y || opts.size;
 	// parent must be relatively positioned
 	parent.css({ position: 'relative' });
+	
 	// pulsing element must be absolutely positioned
 	this.css({ position: 'absolute', top: 0, left: 0 });
 
 	this.each(function() {
 		var $this = $(this);
 		var w = $this.width(), h = $this.height();
-		$this.data('hoverpulse.size', { w: parseInt(w), h: parseInt(h) });
+		var mw = w*opts.magnify, mh = h*opts.magnify;
+		$this.data('hoverpulse.size', { w: parseInt(w), h: parseInt(h), mw: parseInt(mw), mh: parseInt(mh) });
 	});
 
 	if(parent.is('td')){
@@ -49,12 +56,28 @@ $.fn.hoverpulse = function(options) {
 			$this.parent().css('z-index', opts.zIndexActive);
 
 			var size = $this.data('hoverpulse.size');
-			var w = size.w, h = size.h;
+			var mw = size.mw, mh = size.mh, w = size.w, h = size.h;
+			
+			/* if using the original size options rather than the magnify option, setup size_y */
+			if(!magnifying){
+				var newHeight = h+2*opts.size_y;
+				var newWidth = w+2*opts.size;
+				var leftPos = opts.size;
+				var topPos = opts.size_y;
+			}
+			/* if using the new magnify option */
+			else{
+				var newHeight = mh;
+				var newWidth = mw;
+				var leftPos = (mw-w) / 2;
+				var topPos = (mh-h) / 2;
+			}
+
 			$this.stop().animate({
-				top:  ('-'+opts.size_y+'px'),
-				left: ('-'+opts.size+'px'),
-				height: (h+2*opts.size_y)+'px',
-				width:  (w+2*opts.size)+'px'
+				top:  ('-'+topPos+'px'),
+				left: ('-'+leftPos+'px'),
+				height: newHeight+'px',
+				width:  newWidth+'px'
 			}, opts.speed, opts.over);
 		},
 		// hover out
@@ -77,6 +100,7 @@ $.fn.hoverpulse = function(options) {
 };
 
 $.fn.hoverpulse.defaults = {
+	magnify: 1,
 	size:  20,
 	size_y: 0,
 	speed: 200,
